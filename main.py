@@ -1,7 +1,7 @@
-from tkinter import *
-from tkinter.messagebox import showerror
 import os
 import sys
+from tkinter import *
+from tkinter.messagebox import showerror
 
 
 def resource_path(relative_path=""):
@@ -17,7 +17,10 @@ def rj_kvadratne(a, b, c):
 	rjesenja = []
 	kompleksna = False
 	if a == 0:
-		rjesenja.append(- c / b)
+		if b != 0:
+			rjesenja.append(- c / b)
+		else:
+			return ""
 	else:
 		d = (b ** 2) - (4 * a * c)
 		if d > 0:
@@ -106,48 +109,57 @@ def validate_input(full_text):
 	else:
 		try:
 			float(full_text)
-			return True
+			if len(full_text) < 12:
+				return True
+			else:
+				return False
 		except ValueError:
 			return False
 
 def convert_change_thickness(event, typ):
+	global convert_btn
 	if typ:
 		convert_btn.config(highlightthickness=1)
 	else:
 		convert_btn.config(highlightthickness=3)
 
-
-if __name__ == '__main__':
+def main():
+	global convert_btn
+	global lbl, a, b, c
 
 	root = Tk()
 	root.geometry(f"500x250+{root.winfo_screenwidth() // 2 - 250}+{root.winfo_screenheight() // 2 - 125}")
 	root.resizable(False, False)
 	root.title("Quadratic Equation Solver")
-	root.iconbitmap(resource_path("icon.ico"))
+	root.iconbitmap(resource_path("data/quad-eq-solver-icon.ico"))
 	root.config(background="#202A44")
 
 	title = Label(root, text="Quadratic Equation Solver", font=("Helvetica", 25, "bold", "italic"), borderwidth=0, background="#202A44", activebackground="#202A44", foreground="#ffffff", activeforeground="#ffffff", highlightthickness=0)
-	title.place(x=0, y=0, width=500, height=65)
+	title.place(x=0, y=0, width=500, height=80)
 
 	jednadzba = Label(root, text="          X² +           X +           = 0", font=("Arial", 20, "bold"), anchor="center", borderwidth=0, background="#202A44", activebackground="#202A44", foreground="#ffffff", activeforeground="#ffffff", highlightthickness=0)
-	jednadzba.place(x=0, y=70, width=500, height=35)
+	jednadzba.place(x=0, y=90, width=500, height=35)
 	reg = root.register(validate_input)
 
 	a = Entry(root, justify=CENTER, validate="key", validatecommand=(reg, "%P"), borderwidth=0, highlightthickness=1, highlightbackground="green", highlightcolor="green", disabledbackground="grey15", disabledforeground="#ffffff", background="grey15", foreground="#ffffff", insertbackground="#ffffff")
 	b = Entry(root, justify=CENTER, validate="key", validatecommand=(reg, "%P"), borderwidth=0, highlightthickness=1, highlightbackground="green", highlightcolor="green", disabledbackground="grey15", disabledforeground="#ffffff", background="grey15", foreground="#ffffff", insertbackground="#ffffff")
 	c = Entry(root, justify=CENTER, validate="key", validatecommand=(reg, "%P"), borderwidth=0, highlightthickness=1, highlightbackground="green", highlightcolor="green", disabledbackground="grey15", disabledforeground="#ffffff", background="grey15", foreground="#ffffff", insertbackground="#ffffff")
-	lbl = Label(root, text="", font=("Arial", 20, "bold"), anchor="center", borderwidth=0, background="#202A44", activebackground="#202A44", foreground="#ffffff", activeforeground="#ffffff", highlightthickness=0)
-	a.place(x=54, y=70, width=75, height=35)
-	b.place(x=193, y=70, width=75, height=35)
-	c.place(x=323, y=70, width=75, height=35)
+	lbl = Label(root, text="", font=("Arial", 13, "bold"), anchor="center", borderwidth=0, background="#202A44", activebackground="#202A44", foreground="#ffffff", activeforeground="#ffffff", highlightthickness=0)
+	a.place(x=54, y=90, width=75, height=35)
+	b.place(x=193, y=90, width=75, height=35)
+	c.place(x=323, y=90, width=75, height=35)
 
-	convert_btn = Label(root, text="Solve", font=("Helvetica", 10), highlightthickness=1, highlightbackground="green", highlightcolor="green", borderwidth=0, background="grey15", activebackground="grey15", foreground="#ffffff", activeforeground="#ffffff")
-	convert_btn.place(x=0, y=120, width=500, height=30)
+	convert_btn = Label(root, text="Solve", font=("Helvetica", 10, "bold"), highlightthickness=1, highlightbackground="green", highlightcolor="green", borderwidth=0, background="grey15", activebackground="grey15", foreground="#ffffff", activeforeground="#ffffff")
+	convert_btn.place(x=25, y=215, width=450, height=30)
 	convert_btn.bind("<Enter>", lambda event: convert_change_thickness(event, False))
 	convert_btn.bind("<Leave>", lambda event: convert_change_thickness(event, True))
 	convert_btn.bind("<ButtonRelease-1>", klik)
 
 	root.bind("<KeyRelease-Return>", klik)
 
-	lbl.place(x=0, y=150, width=500, height=105)
+	lbl.place(x=0, y=130, width=500, height=90)
 	root.mainloop()
+
+
+if __name__ == '__main__':
+	main()
