@@ -1,9 +1,7 @@
 # Quadratic-Equation-Solver
 A simple program to solve quadratic equations
 
-
-![screenshot](https://user-images.githubusercontent.com/40371578/202571813-69992c35-4025-4ad7-9616-06b2b50ca701.png)
-
+![screenshot](https://github.com/amamic1803/Quadratic-Equation-Solver/assets/40371578/2402ffb3-afee-47eb-a787-0949d0f2a13a)
 
 ## Downloading
 Prebuilt program is available under Releases
